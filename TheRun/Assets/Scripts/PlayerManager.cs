@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public LayerMask blockLayer;
+
     private Rigidbody2D rbody;
 
     private const float MOVE_SPEED = 3;
     private float moveSpeed;
+    private float jumpPower = 400;
+    private bool goJump = false;
+    private bool canJump = false;
 
     public enum MOVE_DIR
     {
@@ -41,11 +46,19 @@ public class PlayerManager : MonoBehaviour
         }
 
         rbody.velocity = new Vector2(moveSpeed, rbody.velocity.y);
+
+        if (goJump)
+        {
+            rbody.AddForce(Vector2.up * jumpPower);
+            goJump = false;
+        }
     }
 
     void Update()
     {
-        
+        canJump =
+            Physics2D.Linecast(transform.position - (transform.right * .3f), transform.position - (transform.up * .1f), blockLayer) ||
+            Physics2D.Linecast(transform.position + (transform.right * .3f), transform.position - (transform.up * .1f), blockLayer);
     }
 
     public void PushLeftButton()
@@ -58,8 +71,17 @@ public class PlayerManager : MonoBehaviour
         moveDirection = MOVE_DIR.RIGHT;
     }
 
+    public void PushJumpButton()
+    {
+        if (canJump)
+        {
+            goJump = true;
+        }
+    }
+
     public void ReleaseMoveButton()
     {
         moveDirection = MOVE_DIR.STOP;
     }
+
 }
