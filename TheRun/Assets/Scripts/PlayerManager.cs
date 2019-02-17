@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public GameObject gameManager;
+
     public LayerMask blockLayer;
 
     private Rigidbody2D rbody;
@@ -86,6 +88,30 @@ public class PlayerManager : MonoBehaviour
         canJump =
             Physics2D.Linecast(transform.position - (transform.right * .3f), transform.position - (transform.up * .1f), blockLayer) ||
             Physics2D.Linecast(transform.position + (transform.right * .3f), transform.position - (transform.up * .1f), blockLayer);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (gameManager.GetComponent<GameManager>().gameMode != GameManager.GAME_MODE.PLAY)
+        {
+            return;
+        }
+
+        if (collision.gameObject.tag == "Trap")
+        {
+            gameManager.GetComponent<GameManager>().GameOver();
+            DestroyPlayer();
+        }
+
+        if (collision.gameObject.tag == "Goal")
+        {
+            gameManager.GetComponent<GameManager>().GameClear();
+        }
+    }
+
+    private void DestroyPlayer()
+    {
+        Destroy(this.gameObject);
     }
 
     public void PushLeftButton()
