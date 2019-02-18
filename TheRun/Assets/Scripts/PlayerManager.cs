@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using DG.Tweening;
+
 public class PlayerManager : MonoBehaviour
 {
     public GameObject gameManager;
@@ -135,7 +137,18 @@ public class PlayerManager : MonoBehaviour
 
     private void DestroyPlayer()
     {
-        Destroy(this.gameObject);
+        gameManager.GetComponent<GameManager>().gameMode = GameManager.GAME_MODE.GAMEOVER;
+
+        var circleCollider = GetComponent<CircleCollider2D>();
+        var boxCollider = GetComponent<BoxCollider2D>();
+        Destroy(circleCollider);
+        Destroy(boxCollider);
+
+        var animSet = DOTween.Sequence();
+        animSet.Append(transform.DOLocalMoveY(1.0f, .2f).SetRelative());
+        animSet.Append(transform.DOLocalMoveY(-10.0f, 1.0f).SetRelative());
+
+        Destroy(this.gameManager, 1.2f);
     }
 
     public void PushLeftButton()
