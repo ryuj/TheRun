@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using DG.Tweening;
+
 public class OrbManager : MonoBehaviour
 {
     private const int ORB_POINT = 100;
@@ -20,6 +22,14 @@ public class OrbManager : MonoBehaviour
     public void GetOrb()
     {
         gameManager.GetComponent<GameManager>().AddScore(ORB_POINT);
-        Destroy(this.gameObject);
+
+        var circleCollider = GetComponent<CircleCollider2D>();
+        Destroy(circleCollider);
+
+        transform.DOScale(2.5f, .3f);
+        var spriteRenderer = transform.GetComponent<SpriteRenderer>();
+        DOTween.ToAlpha(() => spriteRenderer.color, a => spriteRenderer.color = a, .0f, .3f);
+
+        Destroy(this.gameObject, .5f);
     }
 }
