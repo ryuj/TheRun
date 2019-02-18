@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using DG.Tweening;
+
 public class EnemyManager : MonoBehaviour
 {
+    private const int ENEMY_POINT = 50;
+
+    private GameObject gameManager;
+
     public LayerMask blockLayer;
 
     private Rigidbody2D rbody;
@@ -21,6 +27,8 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+
+        gameManager = GameObject.Find("GameManager");
     }
 
     void Update()
@@ -67,6 +75,19 @@ public class EnemyManager : MonoBehaviour
 
     public void DestroyEnemy()
     {
-        Destroy(this.gameObject);
+        gameManager.GetComponent<GameManager>().AddScore(ENEMY_POINT);
+
+        rbody.velocity = new Vector2(0, 0);
+
+        var circleCollider = GetComponent<CircleCollider2D>();
+        var boxCollider = GetComponent<CircleCollider2D>();
+        Destroy(circleCollider);
+        Destroy(boxCollider);
+
+        var animSet = DOTween.Sequence();
+        animSet.Append(transform.DOLocalMoveY(.5f, .2f).SetRelative());
+        animSet.Append(transform.DOLocalMoveY(-10f, 1f).SetRelative());
+
+        Destroy(this.gameObject, .5f);
     }
 }
