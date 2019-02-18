@@ -1952,6 +1952,7 @@ MonoBehaviour:
   textGameOver: {fileID: 1429488642}
   textClear: {fileID: 1341073314}
   buttons: {fileID: 1051401377}
+  textScoreNumber: {fileID: 1043742316}
   gameMode: 0
 --- !u!4 &683606077
 Transform:
@@ -5133,6 +5134,7 @@ GameObject:
   - component: {fileID: 1704104753}
   - component: {fileID: 1704104754}
   - component: {fileID: 1704104755}
+  - component: {fileID: 1704104756}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5281,6 +5283,25 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!95 &1704104756
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704104749}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6df7abd7d24b4b64db5f17aacc1599cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1707123173
 PrefabInstance:
   m_ObjectHideFlags: 0

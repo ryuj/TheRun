@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public LayerMask blockLayer;
 
     private Rigidbody2D rbody;
+    private Animator animator;
 
     private const float MOVE_SPEED = 3;
     private float moveSpeed;
@@ -29,6 +30,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -88,6 +90,8 @@ public class PlayerManager : MonoBehaviour
         canJump =
             Physics2D.Linecast(transform.position - (transform.right * .3f), transform.position - (transform.up * .1f), blockLayer) ||
             Physics2D.Linecast(transform.position + (transform.right * .3f), transform.position - (transform.up * .1f), blockLayer);
+
+        animator.SetBool("onGround", canJump);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
