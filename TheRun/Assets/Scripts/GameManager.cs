@@ -25,8 +25,15 @@ public class GameManager : MonoBehaviour
     private int score = 0;
     private int displayScore = 0;
 
+    public AudioClip clearSE;
+    public AudioClip gameoverSE;
+
+    private AudioSource audioSource;
+
     void Start()
     {
+        audioSource = this.gameObject.GetComponent<AudioSource>();
+
         RefreshScore();
     }
 
@@ -47,6 +54,8 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
+        audioSource.PlayOneShot(clearSE);
+
         gameMode = GAME_MODE.CLEAR;
         textClear.SetActive(true);
         buttons.SetActive(false);
@@ -54,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        audioSource.PlayOneShot(gameoverSE);
+
         textGameOver.SetActive(true);
         buttons.SetActive(false);
     }
